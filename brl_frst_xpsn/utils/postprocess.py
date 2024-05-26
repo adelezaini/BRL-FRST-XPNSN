@@ -324,15 +324,15 @@ def fix_ds(ds):
 
 #––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
-def aerosol_cloud_forcing_scomposition_Ghan(ds):
+def aerosol_cloud_forcing_decomposition_Ghan(ds):
     # Author: Sara Marie Blichner
     
-    """Apply Ghan's scomposition of the aerosol-cloud radiative forcing: 
+    """Apply Ghan's decomposition of the aerosol-cloud radiative forcing:
     https://acp.copernicus.org/articles/13/9971/2013/acp-13-9971-2013.pdf"""
     
     ds_ = ds.copy(deep=True)
 
-    # If the dataset is provided of the exential variables to perfom the Ghan's scomposition...
+    # If the dataset is provided of the exential variables to perfom the Ghan's decomposition...
     if all(elem in list(ds.data_vars) for elem in ['FLNT', 'FSNT', 'FLNT_DRF', 'FLNTCDRF', 'FSNTCDRF', 'FSNT_DRF']):
         
         for var in Ghan_vars:
@@ -341,51 +341,51 @@ def aerosol_cloud_forcing_scomposition_Ghan(ds):
             if 'SWDIR' == var:
                 ds_[var] = ds_['FSNT'] - ds_['FSNT_DRF']
                 ds_[var].attrs['units'] = ds_['FSNT_DRF'].attrs['units']
-                ds_[var].attrs['long_name'] = "Shortwave aerosol direct radiative flux - Ghan's scomposition"
+                ds_[var].attrs['long_name'] = "Shortwave aerosol direct radiative flux - Ghan's decomposition"
 
             if 'LWDIR' == var:
                 ds_[var] = -(ds_['FLNT'] - ds_['FLNT_DRF'])
                 ds_[var].attrs['units'] = ds_['FLNT_DRF'].attrs['units']
-                ds_[var].attrs['long_name'] = "Longwave aerosol direct radiative flux - Ghan's scomposition"
+                ds_[var].attrs['long_name'] = "Longwave aerosol direct radiative flux - Ghan's decomposition"
 
 
             if 'DIR' == var:
                 ds_[var] = ds_['LWDIR'] + ds_['SWDIR']
                 ds_[var].attrs['units'] = ds_['LWDIR'].attrs['units']
-                ds_[var].attrs['long_name'] = "Net aerosol direct radiative flux - Ghan's scomposition"
+                ds_[var].attrs['long_name'] = "Net aerosol direct radiative flux - Ghan's decomposition"
 
 
             if 'SWCF' == var: # this will overwrite the existing one
                 ds_[var] = ds_['FSNT_DRF'] - ds_['FSNTCDRF']
                 ds_[var].attrs['units'] = ds_['FSNT_DRF'].attrs['units']
-                ds_[var].attrs['long_name'] = "Shortwave cloud radiative flux - Ghan's scomposition"
+                ds_[var].attrs['long_name'] = "Shortwave cloud radiative flux - Ghan's decomposition"
 
 
             if 'LWCF' == var: # this will overwrite the existing one
                 ds_[var] = -(ds_['FLNT_DRF'] - ds_['FLNTCDRF'])
                 ds_[var].attrs['units'] = ds_['FLNT_DRF'].attrs['units']
-                ds_[var].attrs['long_name'] = "Longwave cloud radiative flux - Ghan's scomposition"
+                ds_[var].attrs['long_name'] = "Longwave cloud radiative flux - Ghan's decomposition"
 
 
             if 'NCFT' == var:
                 ds_[var] = ds_['FSNT_DRF'] - ds_['FSNTCDRF'] - (ds_['FLNT_DRF'] - ds_['FLNTCDRF'])
                 ds_[var].attrs['units'] = ds_['FLNT_DRF'].attrs['units']
-                ds_[var].attrs['long_name'] = "Net cloud radiative flux - Ghan's scomposition"
+                ds_[var].attrs['long_name'] = "Net cloud radiative flux - Ghan's decomposition"
 
 
             if 'SW_rest' == var:
                 ds_[var] = ds_['FSNTCDRF']
-                ds_[var].attrs['long_name'] = "Shortwave surface change radiative flux - Ghan's scomposition"
+                ds_[var].attrs['long_name'] = "Shortwave surface change radiative flux - Ghan's decomposition"
 
 
             if 'LW_rest' == var:
                 ds_[var] = -ds_['FLNTCDRF']
-                ds_[var].attrs['long_name'] = "Longwave surface change radiative flux - Ghan's scomposition"#Clear sky total column longwave flux - Ghan's scomposition"
+                ds_[var].attrs['long_name'] = "Longwave surface change radiative flux - Ghan's decomposition"#Clear sky total column longwave flux - Ghan's decomposition"
                 
             if 'FREST' == var:
                 ds_[var] = ds_['FSNTCDRF'] - ds_['FLNTCDRF']
                 ds_[var].attrs['units'] = ds_['FSNTCDRF'].attrs['units']
-                ds_[var].attrs['long_name'] = "Net surface change radiative flux - Ghan's scomposition"
+                ds_[var].attrs['long_name'] = "Net surface change radiative flux - Ghan's decomposition"
                 
             if 'FTOT' == var:
                 ds_[var] = ds_['FSNT'] - ds_['FLNT']
@@ -400,7 +400,7 @@ def aerosol_cloud_forcing_scomposition_Ghan(ds):
                 
             #print(var, "-", ds_[var].attrs["long_name"])
                 
-        # Add attributes based on Ghan scomposition
+        # Add attributes based on Ghan decomposition
         
         for var in list(ds_.keys()):
             
@@ -426,7 +426,7 @@ def aerosol_cloud_forcing_scomposition_Ghan(ds):
                 continue
             #print(var, "->", ds_[var].attrs["Ghan_name"], "-", ds_[var].attrs["Ghan_long_name"])
             
-        print("Ghan's scomposition completed")
+        print("Ghan's decomposition completed")
 
     return ds_
 
