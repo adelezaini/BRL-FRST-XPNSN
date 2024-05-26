@@ -1,8 +1,14 @@
+
+
+#Local machine files:
+
+#Mac
 .DS_Store
 */.DS_Store
 .ipynb_checkpoints/
-
-brl-frst-env/
-generate_env_yml.py
 to-do.txt
-readme_tree.md
+generate_env_yml.py
+
+#Nac
+brl-frst-env/
+run_jupyter.sh

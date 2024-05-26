@@ -3,6 +3,11 @@ numpy
 matplotlib
 pandas
 scipy
-cartopy
-netCDF4
-xesmf
+#Cartopy
+#netCDF4
+#xesmf
+
+#Conflict with xesmf : INFO: pip is looking at multiple versions of xarray to determine which version is compatible with other requirements. This could take a while.
+#Collecting xarray
+#  Downloading xarray-0.16.1-py3-none-any.whl (720 kB)         
+#ERROR: Cannot install -r requirements.txt (line 7) because these package versions have conflicting dependencies.
