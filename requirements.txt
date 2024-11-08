@@ -3,8 +3,10 @@ numpy
 matplotlib
 pandas
 scipy
+dask
+bottleneck
+netCDF4
 #Cartopy
-#netCDF4
 #xesmf
 
 #Conflict with xesmf : INFO: pip is looking at multiple versions of xarray to determine which version is compatible with other requirements. This could take a while.
